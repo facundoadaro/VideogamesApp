@@ -17,16 +17,22 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    // ver si hay que añadir alguna imagen
+    image: {
+      type: DataTypes.TEXT,
+    },
     releaseDate: {
       type: DataTypes.DATEONLY,
     },
     rating: {
-      type: DataTypes.DECIMAL(3, 1), // el numero decimal puede tener 3 dígitos como máximo y de esos 3 digitos uno se encuentra después de la coma
+      type: DataTypes.DECIMAL(4,2), // el numero decimal puede tener 4 dígitos como máximo y de esos 4 digitos 2 se encuentran después de la coma
     },
-    platform: {
-      type: DataTypes.STRING, // ver si puede servir también DataTypes.ARRAY(DataTypes.STRING) --> ej: ['ps1','Xbox']
+    platforms: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
+  }, {
+    timestamps: true,
+    createdAt: 'created',
+    updatedAt: false
   });
 };
