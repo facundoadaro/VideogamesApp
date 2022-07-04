@@ -37,10 +37,10 @@ router.get("/", async (req, res) => {
           through: { attributes: [] }, // ver si se puede sacar
         },
       });
-      let gamesDB = gamesFindedDB.map((J) => J.toJSON()); // ver por qué se necesita esto
+      let gamesDB = gamesFindedDB.map((J) => J.toJSON()); // si no se hace el toJSON hay mucha información complementaria que envía la base de datos, esto solo deja la info del videojuego --> la DB manda la info asi: videogame { dataValues: { id:...}}
       gamesDB.forEach((g) => {
         (g.source = "DATABASE"),
-          (g.genres = g.genres && g.genres.map((g) => g.name).join(", "));
+          (g.genres = g.genres && g.genres.map((g) => g.name).join(" - "));
       });
 
       // -------------------------------------------------------------------------
@@ -54,14 +54,22 @@ router.get("/", async (req, res) => {
         return {
           id: game.id,
           name: game.name,
-          image: game.image,
+          image: game.background_image,
           releaseDate: game.releaseDate,
           rating: game.rating,
           source: "API",
           platforms:
             game.platforms &&
-            game.platforms.map((p) => p.platform.name).join(", "),
-          genres: game.genres && game.genres.map((g) => g.name).join(", "),
+            game.platforms
+              .map((p) => p.platform.name)
+              .filter((p) => p != null)
+              .join(" - "),
+          genres:
+            game.genres &&
+            game.genres
+              .map((g) => g.name)
+              .filter((g) => g != null)
+              .join(" - "),
         };
       });
 
@@ -69,7 +77,9 @@ router.get("/", async (req, res) => {
 
       returnedGames.length
         ? res.json(returnedGames)
-        : res.status(404).send(`No existe ningún juego que tenga la información "${name}"`);
+        : res
+            .status(404)
+            .send(`No existe ningún juego que tenga la información "${name}"`);
     } catch (error) {
       console.log(error);
     }
@@ -85,10 +95,10 @@ router.get("/", async (req, res) => {
         through: { attributes: [] },
       },
     });
-    let gamesDB = gamesFindedDB.map((J) => J.toJSON()); // ver por qué se necesita esto
+    let gamesDB = gamesFindedDB.map((J) => J.toJSON());
     gamesDB.forEach((g) => {
       (g.source = "DATABASE"),
-        (g.genres = g.genres && g.genres.map((g) => g.name).join(", "));
+        (g.genres = g.genres && g.genres.map((g) => g.name).join(" - "));
     });
 
     // ----------------------------------------------------------------------------
@@ -110,8 +120,16 @@ router.get("/", async (req, res) => {
             source: "API",
             platforms:
               game.platforms &&
-              game.platforms.map((p) => p.platform.name).join(", "),
-            genres: game.genres && game.genres.map((g) => g.name).join(", "),
+              game.platforms
+                .map((p) => p.platform.name)
+                .filter((p) => p != null)
+                .join(" - "),
+            genres:
+              game.genres &&
+              game.genres
+                .map((g) => g.name)
+                .filter((g) => g != null)
+                .join(" - "),
           };
         });
         gamesAPI = [...gamesAPI, ...gamesCharged];
@@ -133,23 +151,40 @@ router.get("/", async (req, res) => {
 // Crea un videojuego en la base de datos, relacionado a sus géneros.
 
 router.post("/", async (req, res) => {
-  let { name, description, releaseDate, rating, genres, platforms } = req.body;
+  let { name, description, image, releaseDate, rating, genres, platforms } =
+    req.body;
 
-  platforms = platforms.join(", "); // las platforms vienen en un array, entonces los junto para mostrarlos en un string separados por ', '
+  platforms = platforms.join(" - "); // las platforms vienen en un array, entonces los junto para mostrarlos en un string separados por ', '
+
+  let gameFinded = await Videogame.findAll({
+    where: { name: name },
+  });
+
+  if (!!gameFinded.length)
+    return res.status(400).send("The game already exists");
 
   try {
-    const gameCreated = await Videogame.findOrCreate({
-      // findOrCreate devuelve un array con dos cosas, la primera el elemento (buscado o creado) y la segunda sobre si lo encontró o si lo creó => [object, created]
-      where: {
-        name,
-        description,
-        releaseDate,
-        rating,
-        platforms,
-      },
+    let gameCreated = await Videogame.create({
+      name,
+      description,
+      image,
+      releaseDate,
+      rating,
+      platforms,
     });
-    await gameCreated[0].addGenres(genres); // relaciono ID -->!!es el ID no el nombre del genre!!<-- genres al juego creado
-    //CUANDO SE TIENE MÁS DE UN GÉNERO SE DEBE PASAR EN JSON COMO: "genres": [4,3],
+
+    image
+      ? null
+      : await gameCreated.update({
+          image:
+            "https://images.pexels.com/photos/8885140/pexels-photo-8885140.jpeg?auto=compress",
+        });
+
+    let generoDb = await Genre.findAll({
+      where: { name: genres },
+    });
+
+    await gameCreated.addGenres(generoDb); //ojo que si en el front no se cargan los generos no se añaden, no se bien porque
   } catch (error) {
     console.log(error);
   }
