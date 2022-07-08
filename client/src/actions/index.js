@@ -41,15 +41,34 @@ export function getGamesByName(name) {
         payload: json.data,
       });
     } catch (error) {
-      console.log(error);
+      alert(error.response.data);
     }
   };
 }
 
-export function postGame(game) {
+export function getDetail(id) {
   return async function (dispatch) {
-    let gameSent = await axios.post("http://localhost:3001/videogames", game);
-    return gameSent;
+   try {
+    let json = await axios.get(`http://localhost:3001/videogame/${id}`);
+
+    return dispatch({
+      type: "GET_DETAIL",
+      payload: json.data
+    })
+   } catch (error) {
+    console.log(error)
+   }
+  };
+}
+
+export function postGame(game) {
+  return async function () {
+    try {
+      let gameSent = await axios.post("http://localhost:3001/videogames", game);
+      return gameSent;
+    } catch (error) {
+      alert(error.response.data);
+    }
   };
 }
 

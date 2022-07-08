@@ -11,9 +11,9 @@ function App() {
       <div className="App">
         <Switch>
           <Route exact path="/" component={LandingPage} />
+          <Route path="/home/:id" render={({ match }) => <DetailsCard id={match.params.id} />} />
           <Route path="/home" component={Home} />
           <Route path="/createGame" component={CreateGame} />
-          <Route path="/home/:id" component={DetailsCard} />
         </Switch>
       </div>
     </BrowserRouter>

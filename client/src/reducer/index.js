@@ -2,7 +2,23 @@ const initialState = {
   games: [],
   allGames: [],
   genres: [],
-  platforms: ['Xbox 360', 'Xbox One', 'Xbox', 'PlayStation 5', 'PlayStation 4', 'PlayStation 3', 'PS Vita', 'Nintendo Switch', 'Wii U', 'PC', 'Linux', 'macOS', 'iOS', 'Dreamcast'],
+  detail: [],
+  platforms: [
+    "Xbox 360",
+    "Xbox One",
+    "Xbox",
+    "PlayStation 5",
+    "PlayStation 4",
+    "PlayStation 3",
+    "PS Vita",
+    "Nintendo Switch",
+    "Wii U",
+    "PC",
+    "Linux",
+    "macOS",
+    "iOS",
+    "Dreamcast",
+  ],
 };
 
 export default function reducer(state = initialState, action) {
@@ -14,10 +30,28 @@ export default function reducer(state = initialState, action) {
         allGames: action.payload,
       };
 
+    case "CLEAR_GAMES":
+      return {
+        ...state,
+        games: [],
+      };
+
     case "GET_GENRES":
       return {
         ...state,
         genres: action.payload,
+      };
+
+    case "GET_DETAIL":
+      return {
+        ...state,
+        detail: action.payload,
+      };
+
+    case "CLEAR_DETAILS":
+      return {
+        ...state,
+        detail: [],
       };
 
     case "SEARCH_BY_NAME":

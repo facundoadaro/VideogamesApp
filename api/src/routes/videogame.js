@@ -24,6 +24,7 @@ router.get("/:id", async (req, res) => {
         through: { attributes: [] }, // ver si esto se puede sacar
       },
     });
+    console.log(game)
     const gameDBSent = {
       id: game.id,
       name: game.name,
@@ -31,9 +32,8 @@ router.get("/:id", async (req, res) => {
       image: game.image,
       releaseDate: game.releaseDate,
       rating: game.rating,
-      platforms: game.platforms &&
-      game.platforms.map((p) => p.platform.name).join(", "), // esto fue cambiado, probar a ver si sigue andando bien
-      genres: game.genres.map((p) => p.name).join(","),
+      platforms: game.platforms, // esto no se mapea porque al crear los juegos puse que las platforms se joineen con " - ", entonces ya está hecho de antemano
+      genres: game.genres.map((p) => p.name).join(" - "),
     };
     return res.json(gameDBSent);
   } else {
@@ -63,13 +63,13 @@ router.get("/:id", async (req, res) => {
           platforms
             .map((p) => p.platform.name)
             .filter(p => p != null)
-            .join(", "),
+            .join(" - "),
         genres:
           genres &&
           genres
             .map((g) => g.name)
             .filter(g => g != null)
-            .join(", "),
+            .join(" - "),
       };
 
       return res.send(gameAPISent);

@@ -5,10 +5,15 @@ import { Link, useHistory } from "react-router-dom";
 import { getGenres, postGame } from "../actions/index.js";
 
 export default function CreateGame() {
+  //--------- TRAE INFO DEL ESTADO DE REDUX Y CREA ESTADOS LOCALES ----------
   const dispatch = useDispatch();
   const history = useHistory();
   const allPlatforms = useSelector((state) => state.platforms);
   const allGenres = useSelector((state) => state.genres);
+
+  const [errors, setErrors] = useState({
+    name: "", // pongo un string vacío para que no se me habilite el botón de submit apenas entro a la pagina
+  });
 
   const [input, setInput] = useState({
     name: "",
@@ -16,15 +21,50 @@ export default function CreateGame() {
     image: "",
     releaseDate: "",
     rating: 0,
-    genres: [], // ver la condición/restricción de que al menos haya uno seleccionado
-    platforms: [], // ver la condición/restricción de que al menos haya uno seleccionado
+    genres: [],
+    platforms: [],
   });
+
+  //------------------- FUNCION VALIDADORA DE INPUTS -------------------
+
+  function validate(input) {
+    //------------------- VALIDACIONES GENERALES -------------------
+    let errors = {};
+    let urlValidation =
+      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+
+    if (!input.name) {
+      errors.name = "The name of the game is required";
+    }
+    if (!input.description) {
+      errors.description = "The description of the game is required";
+    }
+    if (!input.image.match(urlValidation) && input.image.length >= 1) {
+      errors.image = "Insert a valid URL";
+    }
+    if (input.genres.length === 0) {
+      errors.genres = "At least one genre must be chosen";
+    }
+    if (input.platforms.length === 0) {
+      errors.platforms = "At least one platform must be chosen";
+    }
+
+    return errors;
+  }
+
+  //------------------- FUNCIONES HANDLERS DE INPUTS -------------------
 
   function handleChange(e) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    );
   }
 
   function handleCheckGenres(e) {
@@ -34,6 +74,19 @@ export default function CreateGame() {
         genres: [...input.genres, e.target.value],
       });
     }
+    if (!e.target.checked) {
+      setInput({
+        ...input,
+        genres:
+          input.genres && input.genres.filter((g) => g !== e.target.value),
+      });
+    }
+    setErrors(
+      validate({
+        ...input,
+        genres: [...input.genres, e.target.value],
+      })
+    );
   }
 
   function handleCheckPlatforms(e) {
@@ -43,12 +96,25 @@ export default function CreateGame() {
         platforms: [...input.platforms, e.target.value],
       });
     }
+    if (!e.target.checked) {
+      setInput({
+        ...input,
+        platforms:
+          input.platforms &&
+          input.platforms.filter((p) => p !== e.target.value),
+      });
+    }
+    setErrors(
+      validate({
+        ...input,
+        platforms: [...input.platforms, e.target.value],
+      })
+    );
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(postGame(input));
-    alert("Game successfully created");
     setInput({
       name: "",
       description: "",
@@ -67,6 +133,10 @@ export default function CreateGame() {
     dispatch(getGenres());
   }, [dispatch]);
 
+  // useEffect(() => {
+  //   console.log(errors)
+  // },[errors])
+
   return (
     <div>
       <br />
@@ -78,7 +148,9 @@ export default function CreateGame() {
 
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
-          <label>Name</label>
+          <label>
+            Name<strong>*</strong>
+          </label>
           <br />
           <input
             required
@@ -88,10 +160,13 @@ export default function CreateGame() {
             placeholder="Ex: Grand Theft Auto V "
             onChange={(e) => handleChange(e)}
           />
+          {errors.name && <p>{errors.name}</p>}
         </div>
         <br />
         <div>
-          <label>Description</label>
+          <label>
+            Description<strong>*</strong>
+          </label>
           <br />
           <textarea
             required
@@ -103,18 +178,20 @@ export default function CreateGame() {
             rows="6"
             onChange={(e) => handleChange(e)}
           />
+          {errors.description && <p>{errors.description}</p>}
         </div>
         <br />
         <div>
           <label>Image</label>
           <br />
           <input
-            type="url"
+            type="text"
             value={input.image}
             name="image"
             placeholder="Ex: https://www.yourhostimage.com/image.jpg "
             onChange={(e) => handleChange(e)}
           />
+          {errors.image && <p>{errors.image}</p>}
         </div>
         <br />
         <div>
@@ -146,7 +223,9 @@ export default function CreateGame() {
         </div>
         <br />
         <div>
-          <label>Genres</label>
+          <label>
+            Genres<strong>*</strong>
+          </label>
           <br />
           {allGenres &&
             allGenres.map((g) => (
@@ -162,10 +241,13 @@ export default function CreateGame() {
                 </label>
               </div>
             ))}
+          {errors.genres && <p>{errors.genres}</p>}
         </div>
         <br />
         <div>
-          <label>Platforms</label>
+          <label>
+            Platforms<strong>*</strong>
+          </label>
           <br />
           {allPlatforms &&
             allPlatforms.map((platform, index) => (
@@ -181,9 +263,16 @@ export default function CreateGame() {
                 </label>
               </div>
             ))}
+          {errors.platforms && <p>{errors.platforms}</p>}
         </div>
         <br />
-        <button type="submit">Crear personaje</button>
+        {Object.keys(errors).length ? (
+          <button disabled type="submit">
+            Crear personaje
+          </button>
+        ) : (
+          <button type="submit">Crear personaje</button>
+        )}
       </form>
       <br />
     </div>

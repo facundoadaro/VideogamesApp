@@ -54,7 +54,7 @@ router.get("/", async (req, res) => {
         return {
           id: game.id,
           name: game.name,
-          image: game.background_image,
+          image: game.background_image ? game.background_image : "https://images.pexels.com/photos/8885140/pexels-photo-8885140.jpeg?auto=compress",
           releaseDate: game.releaseDate,
           rating: game.rating,
           source: "API",
@@ -105,37 +105,65 @@ router.get("/", async (req, res) => {
     // traigo 100 juegos de la api
     try {
       let i = 0;
-      let gamesAPI = [];
+      // let gamesAPI = [];
       let response = await axios.get(
-        `https://api.rawg.io/api/games?key=${API_KEY}`
+        `https://api.rawg.io/api/games?key=${API_KEY}&page_size=40`
       );
-      while (i < 5) {
-        const gamesCharged = response.data.results.map((game) => {
-          return {
-            id: game.id,
-            name: game.name,
-            image: game.background_image,
-            releaseDate: game.released,
-            rating: game.rating,
-            source: "API",
-            platforms:
-              game.platforms &&
-              game.platforms
-                .map((p) => p.platform.name)
-                .filter((p) => p != null)
-                .join(" - "),
-            genres:
-              game.genres &&
-              game.genres
-                .map((g) => g.name)
-                .filter((g) => g != null)
-                .join(" - "),
-          };
-        });
-        gamesAPI = [...gamesAPI, ...gamesCharged];
-        response = await axios.get(response.data.next);
-        i++;
-      }
+
+      // PARA PODER TRAER MÁS JUEGOS, LA API PERMITE 40 POR PÁGINA UNICAMENTE
+      // while (i < 5) {
+      //   const gamesCharged = response.data.results.map((game) => {
+      //     return {
+      //       id: game.id,
+      //       name: game.name,
+      //       image: game.background_image,
+      //       releaseDate: game.released,
+      //       rating: game.rating,
+      //       source: "API",
+      //       platforms:
+      //         game.platforms &&
+      //         game.platforms
+      //           .map((p) => p.platform.name)
+      //           .filter((p) => p != null)
+      //           .join(" - "),
+      //       genres:
+      //         game.genres &&
+      //         game.genres
+      //           .map((g) => g.name)
+      //           .filter((g) => g != null)
+      //           .join(" - "),
+      //     };
+      //   });
+      //   gamesAPI = [...gamesAPI, ...gamesCharged];
+      //   response = await axios.get(response.data.next);
+      //   i++;
+      // }
+
+      const gamesAPI = response.data.results.map((game) => {
+        return {
+          id: game.id,
+          name: game.name,
+          image: game.background_image,
+          releaseDate: game.released,
+          rating: game.rating,
+          source: "API",
+          platforms:
+            game.platforms &&
+            game.platforms
+              .map((p) => p.platform.name)
+              .filter((p) => p != null)
+              .join(" - "),
+          genres:
+            game.genres &&
+            game.genres
+              .map((g) => g.name)
+              .filter((g) => g != null)
+              .join(" - "),
+        };
+      });
+
+
+
       res.json(gamesDB.concat(gamesAPI)); // le doy prioridad a que aparezcan los creados primero
     } catch (error) {
       console.log(error);
@@ -178,6 +206,18 @@ router.post("/", async (req, res) => {
       : await gameCreated.update({
           image:
             "https://images.pexels.com/photos/8885140/pexels-photo-8885140.jpeg?auto=compress",
+        });
+
+    releaseDate
+      ? null
+      : await gameCreated.update({
+          releaseDate: "No register",
+        });
+
+    rating
+      ? null
+      : await gameCreated.update({
+          rating: 3,
         });
 
     let generoDb = await Genre.findAll({

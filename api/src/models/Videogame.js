@@ -21,10 +21,11 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
     },
     releaseDate: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.TEXT,
     },
     rating: {
       type: DataTypes.DECIMAL(4,2), // el numero decimal puede tener 4 dígitos como máximo y de esos 4 digitos 2 se encuentran después de la coma
+      defaultValue: 3.5
     },
     platforms: {
       type: DataTypes.STRING,

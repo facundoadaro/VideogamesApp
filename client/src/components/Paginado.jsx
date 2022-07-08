@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function Paginado({ gamesPerPage, allGames, paginado }) {
+export default function Paginado({ gamesPerPage, gamesFinded, paginado }) {
   const pageNumbers = [];
 
-  for (let i = 0; i < Math.ceil(allGames / gamesPerPage); i++) {
+  for (let i = 0; i < Math.ceil(gamesFinded / gamesPerPage); i++) {
     pageNumbers.push(i + 1);
   }
 
