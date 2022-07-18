@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getDetail } from "../actions/index.js";
 import Loading from "../multimedia/loading.gif"
+import styles from "./css/detailscard.module.css";
 
 export default function DetailsCard({id}) {
   const dispatch = useDispatch();
@@ -20,24 +21,47 @@ export default function DetailsCard({id}) {
   }
 
   return (
-    <div>
+    <div className={styles.homebackground}>
       {Object.keys(gameDetails).length ? (
         <div>
-          <br/>
           <Link to="/home">
-            <button onClick={() => handleClick()}>Home</button>
+            <button className={styles.button} onClick={() => handleClick()}>Home</button>
           </Link>
+          
           <h1>Game Details</h1>
-          <h2>Name:<br/>{gameDetails.name}</h2>
-          <img src={gameDetails.image ?  gameDetails.image : "https://images.pexels.com/photos/8885140/pexels-photo-8885140.jpeg?auto=compress"} alt="img not found" width='700px' height='500px'/>
-          <h3>Description:<br/>{gameDetails.description ? gameDetails.description : <p>Not found</p>}</h3>
-          <h3>Release Date:<br/>{gameDetails.releaseDate}</h3>
-          <h3>Rating:<br/>{gameDetails.rating}</h3>
-          <h3>Platforms:<br/>{gameDetails.platforms ? gameDetails.platforms : <p>Not found</p>}</h3>
-          <h3>Genres<br/>{gameDetails.genres ? gameDetails.genres : <p>Not found</p> }</h3>
+          <br/>
+
+          <h2>Name</h2>
+          <h3>{gameDetails.name}</h3>
+          <br/>
+
+          <img id={styles.img}  src={gameDetails.image ?  gameDetails.image : "https://images.pexels.com/photos/8885140/pexels-photo-8885140.jpeg?auto=compress"} alt="img not found"/>
+
+          <h2>Description</h2>
+          {gameDetails.description ? <h3 id={styles.descriptiontext}>{gameDetails.description}</h3> : <h3>Not found</h3>}
+          <br/>
+
+          <h2>Release Date</h2>
+          <h3>{gameDetails.releaseDate}</h3>
+          <br/>
+
+          <h2>Rating</h2>
+          <h3>{gameDetails.rating}</h3>
+          <br/>
+
+          <h2>Platforms</h2>
+          {gameDetails.platforms ? <h3>{gameDetails.platforms}</h3> : <h3>Not found</h3>}
+          <br/>
+          
+          <h2>Genres</h2>
+          {gameDetails.genres ? <h3>{gameDetails.genres}</h3> : <h3>Not found</h3> }
+          <br/>
+
         </div>
       ) : (
-        <img src={Loading} alt='not found'/>
+        <div>
+          <img className={styles.gifloadeddetails} src={Loading} alt='not found'/>
+        </div>
       )}
       <br/>
     </div>

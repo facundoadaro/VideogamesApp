@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One");
+@import url("https://fonts.googleapis.com/css?family=Teko");
+
+.homebackground {
+  background: url("../../multimedia/homebackground.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.button {
+  height: 40px;
+  width: 130px;
+  font-family: "Rubik Mono One";
+  color: #ffffff;
+  font-size: 130%;
+  border-radius: 30px;
+  background: #ffa515dc;
+  margin-top: 5.5vh;
+  margin-bottom: 7vh;
+}
+.button:hover {
+  color: #ffa515;
+  background: #ffffffc7;
+}
+
+
+h1 {
+  font-size: 400%;
+  font-family: "Teko";
+  color: #ffa515dc;
+  margin: 25px 10px 20px 10px;
+  text-transform: uppercase;
+}
+
+h2 {
+  font-size: 250%;
+  font-family: "Teko";
+  color: #ffa515dc;
+  margin: 25px 10px 20px 10px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-size: 200%;
+  font-family: "Teko";
+  color: #212121f1;
+  margin: 25px 10px 20px 10px;
+  text-transform: uppercase;
+}
+
+#img {
+  width: 60vw;
+  height: 70vh;
+  border-radius: 10px;
+  margin-bottom: 6vh;
+}
+
+#descriptiontext {
+  font-size: 200%;
+  font-family: "Teko";
+  text-align: justify;
+  color: #212121f1;
+  text-transform: uppercase;
+  margin: auto 100px auto 100px;
+}
+
+.gifloadeddetails {
+  padding-top: 230px;
+  padding-bottom: 244px;
+  padding-right: 80px;
+  height: 150px;
+  width: 150px;
+}

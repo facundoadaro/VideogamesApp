@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One');
-
+@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One");
 
 .first {
   background: url("../../multimedia/landingbackground.jpg");
@@ -12,29 +11,22 @@
   align-items: center;
 }
 
-
 .h1 {
-    font-family: 'Rubik Mono One', cursive;
-    font-size: 200%;
-    color: #ffa515;
+  font-family: "Rubik Mono One", cursive;
+  font-size: 200%;
+  color: #ffa515;
 }
 
 .button {
   height: 50px;
   width: 180px;
-  font-family: 'Rubik Mono One';
+  font-family: "Rubik Mono One";
   color: #ffffff;
   font-size: 130%;
-  border-radius:30px;
-  background:#ffa515dc;
+  border-radius: 30px;
+  background: #ffa515dc;
 }
-
 .button:hover {
-    height: 50px;
-    width: 180px;
-    font-family: 'Rubik Mono One';
-    color: #ffa515;
-    font-size: 130%;
-    border-radius:30px;
-    background: #ffffffc7;
-  };
+  color: #ffa515;
+  background: #ffffffc7;
+}

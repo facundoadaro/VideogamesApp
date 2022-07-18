@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getGamesByName } from "../actions/index.js";
+import styles from "./css/home.module.css";
 
 export default function NavBar({ setCurrentPage }) {
   const dispatch = useDispatch();
@@ -22,8 +23,8 @@ export default function NavBar({ setCurrentPage }) {
 
   return (
     <div>
-      <input type="text" placeholder="Search games" value={name} onChange={(e) => handleInputChange(e)}/>
-      <button type="submit" onClick={(e) => handleSubmit(e)}>Search</button>
+      <input id={styles.searchinput} type="text" placeholder="Search games" value={name} onChange={(e) => handleInputChange(e)}/>
+      <button id={styles.createbutton} type="submit" onClick={(e) => handleSubmit(e)}>Search</button>
     </div>
   );
 }

@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css?family=Teko');
+
+.allcont {
+    text-decoration: none; 
+}
+
+.showing{
+    margin: 15px 30px 15px 30px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content:space-evenly;
+    border: inset black;
+    border-radius:30px;
+    border-width: 3px;
+    width: 25vw;
+    height: 63vh;
+    background-color: rgba(34, 34, 34, 0.787);
+}
+.showing:hover {
+    background-color: rgba(54, 54, 54, 0.787);
+}
+
+
+.info3 {
+    font-size: 230%;
+    font-family: 'Teko';
+    color: #e4e4e4f1;
+    text-transform: capitalize;
+    margin: 25px 10px 20px 10px;
+    text-transform: uppercase;
+}
+
+.img {
+    border-radius:15px;
+}
+
+.info5 {
+    font-family: 'Teko';
+    color: #e4e4e4f1;
+    text-decoration: none;
+    margin: 20px 10px 25px 10px;
+    font-size: 140%;
+    text-transform: uppercase;
+}

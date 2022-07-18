@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import CardGame from "./CardGame";
 import Paginado from "./Paginado";
 import NavBar from "./NavBar";
-import Loading from "../multimedia/loading.gif"
+import Loading from "../multimedia/loading.gif";
+import styles from "./css/home.module.css";
 
 export default function Home() {
   const dispatch = useDispatch(); // useDispatch manda la info necesaria a la constante dispatch para poder despachar las acciones
@@ -48,7 +49,7 @@ export default function Home() {
   useEffect(() => {
     setTimeout(function () {
       dispatch(getGames());
-    }, 100);
+    }, 300);
   }, [dispatch]);
 
   function handleFilterStatus(e) {
@@ -72,67 +73,80 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className={styles.homebackground}>
       {currentGames.length > 0 ? (
         <div>
           <br />
-          <Link to="/createGame">
-            <button onClick={() => handleClick()}>Create a Videogame!</button>
-          </Link>
-          <h1>Available Videogames</h1>
+          <div className={styles.firstdivision}>
+            <div>
+              <Link id={styles.createlink} to="/createGame">
+                <button id={styles.createbutton} onClick={() => handleClick()}>
+                  Create a Videogame
+                </button>
+              </Link>
+            </div>
+            <div>
+              <NavBar setCurrentPage={setCurrentPage} />
+            </div>
+          </div>
 
-          <button onClick={() => handleClickFilters()}>Clear filters</button>
-          <div>
+          <br />
+          <div className={styles.seconddivision}>
+            <div>
+              <button
+                id={styles.clearfilterbutton}
+                onClick={() => handleClickFilters()}
+              >
+                Clear filters
+              </button>
+            </div>
             <br />
             <div>
-              <label>
-                Origin
+              <label className={styles.filterordertext}>
+                Filter By
                 <br />
               </label>
-              <select onChange={(e) => handleFilterStatus(e)}>
-                <option value="default">All</option>
-                <option value="DB">Created</option>
-                <option value="API">Available</option>
-              </select>
-            </div>
-            <div>
-              <label>
-                Alphabetical order
-                <br />
-              </label>
-              <select onChange={(e) => handleOrderStatus(e)}>
-                <option value="default">Select</option>
-                <option value="A-Z">A-Z</option>
-                <option value="Z-A">Z-A</option>
-              </select>
-            </div>
-            <div>
-              <label>
-                Order by Rating
-                <br />
-              </label>
-              <select onChange={(e) => handleOrderStatus(e)}>
-                <option value="default">Select</option>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-              </select>
-            </div>
-            <div>
-              <label>
-                Search by Genre
-                <br />
-              </label>
-              <select onChange={(e) => handleFilterStatus(e)}>
-                <option key="default" value="default">
-                  All
-                </option>
-                {genresDisplayed &&
-                  genresDisplayed.map((genre, index) => (
-                    <option key={index} value={genre}>
-                      {genre}
+              <div className={styles.rowinputs}>
+                <div>
+                  <select className={styles.inputs} onChange={(e) => handleFilterStatus(e)}>
+                    <option value="default">Origin</option>
+                    <option value="DB">Created</option>
+                    <option value="API">Available</option>
+                  </select>
+                </div>
+                <div>
+                  <select className={styles.inputs} onChange={(e) => handleFilterStatus(e)}>
+                    <option key="default" value="default">
+                      Genre
                     </option>
-                  ))}
-              </select>
+                    {genresDisplayed &&
+                      genresDisplayed.map((genre, index) => (
+                        <option key={index} value={genre}>
+                          {genre}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label className={styles.filterordertext}>
+                Order By
+                <br />
+              </label>
+              <div className={styles.rowinputs}>
+                  <select className={styles.inputs} onChange={(e) => handleOrderStatus(e)}>
+                    <option value="default">Alphabet</option>
+                    <option value="A-Z">A-Z</option>
+                    <option value="Z-A">Z-A</option>
+                  </select>
+                  <select className={styles.inputs} onChange={(e) => handleOrderStatus(e)}>
+                    <option value="default">Rating</option>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+              </div>
             </div>
             <br />
           </div>
@@ -143,26 +157,33 @@ export default function Home() {
             paginado={paginado}
           />
 
-          <NavBar setCurrentPage={setCurrentPage} />
-
-          {currentGames?.map((g) => {
-            return (
-              <div key={g.id}>
-                <Link to={`/home/${g.id}`} onClick={() => handleClick()}>
-                  <CardGame name={g.name} image={g.image} genres={g.genres} />
-                </Link>
-              </div>
-            );
-          })}
+          <div className={styles.cards}>
+            {currentGames?.map((g) => {
+              return (
+                <div key={g.id}>
+                  <Link
+                    className={styles.linkcard}
+                    to={`/home/${g.id}`}
+                    onClick={() => handleClick()}
+                  >
+                    <CardGame name={g.name} image={g.image} genres={g.genres} />
+                  </Link>
+                </div>
+              );
+            })}
+          </div>
 
           <Paginado
             gamesPerPage={gamesPerPage[0]}
             gamesFinded={gamesFinded.length}
             paginado={paginado}
           />
+          <br />
         </div>
       ) : (
-        <img src={Loading} alt='not found'/>
+        <div>
+          <img className={styles.gifloaded} src={Loading} alt="not found" />
+        </div>
       )}
     </div>
   );

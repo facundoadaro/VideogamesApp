@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { getGenres, postGame } from "../actions/index.js";
+import styles from "./css/creategame.module.css";
 
 export default function CreateGame() {
   //--------- TRAE INFO DEL ESTADO DE REDUX Y CREA ESTADOS LOCALES ----------
@@ -138,37 +139,38 @@ export default function CreateGame() {
   // },[errors])
 
   return (
-    <div>
+    <div className={styles.homebackground}>
       <br />
       <Link to="/home">
-        <button>Home</button>
+        <button className={styles.button}>Home</button>
       </Link>
 
       <h1>Create a new Videogame!</h1>
 
       <form onSubmit={(e) => handleSubmit(e)}>
         <div>
-          <label>
+          <h3>
             Name<strong>*</strong>
-          </label>
+          </h3>
           <br />
           <input
-            required
+            className={styles.nameandurl}
             type="text"
             value={input.name}
             name="name"
             placeholder="Ex: Grand Theft Auto V "
             onChange={(e) => handleChange(e)}
           />
-          {errors.name && <p>{errors.name}</p>}
+          {errors.name && <p className={styles.errorinputs}>{errors.name}</p>}
         </div>
         <br />
         <div>
-          <label>
+          <h3>
             Description<strong>*</strong>
-          </label>
+          </h3>
           <br />
           <textarea
+            className={styles.description}
             required
             type="text"
             value={input.description}
@@ -178,24 +180,27 @@ export default function CreateGame() {
             rows="6"
             onChange={(e) => handleChange(e)}
           />
-          {errors.description && <p>{errors.description}</p>}
+          {errors.description && (
+            <p className={styles.errorinputs}>{errors.description}</p>
+          )}
         </div>
         <br />
         <div>
-          <label>Image</label>
+          <h3>Image</h3>
           <br />
           <input
+            className={styles.nameandurl}
             type="text"
             value={input.image}
             name="image"
             placeholder="Ex: https://www.yourhostimage.com/image.jpg "
             onChange={(e) => handleChange(e)}
           />
-          {errors.image && <p>{errors.image}</p>}
+          {errors.image && <p className={styles.errorinputs}>{errors.image}</p>}
         </div>
         <br />
         <div>
-          <label>Rating</label>
+          <h3>Rating</h3>
           <br />
           <input
             type="range"
@@ -212,9 +217,10 @@ export default function CreateGame() {
         </div>
         <br />
         <div>
-          <label>Release Date</label>
+          <h3>Release Date</h3>
           <br />
           <input
+            className={styles.dateinput}
             type="date"
             value={input.releaseDate}
             name="releaseDate"
@@ -222,57 +228,70 @@ export default function CreateGame() {
           />
         </div>
         <br />
-        <div>
-          <label>
-            Genres<strong>*</strong>
-          </label>
-          <br />
-          {allGenres &&
-            allGenres.map((g) => (
-              <div key={g.id}>
-                <label>
-                  <input
+
+        <div id={styles.dividechecks}>
+          <div className={styles.checkcolumns}>
+            <h3>
+              Genres<strong>*</strong>
+            </h3>
+            <br />
+            {allGenres &&
+              allGenres.map((g) => (
+                <div key={g.id} className={styles.rowcheck} >
+                  <input className={styles.checkcustom}
                     type="checkbox"
                     value={g.name}
                     name={g.name}
                     onChange={(e) => handleCheckGenres(e)}
                   />
-                  {g.name}
-                </label>
-              </div>
-            ))}
-          {errors.genres && <p>{errors.genres}</p>}
-        </div>
-        <br />
-        <div>
-          <label>
-            Platforms<strong>*</strong>
-          </label>
+                  <h5 className={styles.h5textcheckbox}>{g.name}</h5>
+                </div>
+              ))}
+            {errors.genres && (
+              <p className={styles.errorinputs}>{errors.genres}</p>
+            )}
+          </div>
+
           <br />
-          {allPlatforms &&
-            allPlatforms.map((platform, index) => (
-              <div key={index}>
-                <label>
-                  <input
+          <div className={styles.checkcolumns}>
+            <h3>
+              Platforms<strong>*</strong>
+            </h3>
+            <br />
+            {allPlatforms &&
+              allPlatforms.map((platform, index) => (
+                <div key={index} className={styles.rowcheck}>
+                  <input className={styles.checkcustom}
                     type="checkbox"
                     value={platform}
                     name={platform}
                     onChange={(e) => handleCheckPlatforms(e)}
                   />
-                  {platform}
-                </label>
-              </div>
-            ))}
-          {errors.platforms && <p>{errors.platforms}</p>}
+                  <h5 className={styles.h5textcheckbox}>{platform}</h5>
+                </div>
+              ))}
+          {errors.platforms && (
+              <p className={styles.errorinputs}>{errors.platforms}</p>
+            )}
+          </div>
         </div>
+
         <br />
+        <div>
         {Object.keys(errors).length ? (
-          <button disabled type="submit">
-            Crear personaje
+          <button
+            className={styles.buttonsubmitdisabled}
+            disabled
+            type="submit"
+          >
+            Create Game
           </button>
         ) : (
-          <button type="submit">Crear personaje</button>
+          <button className={styles.buttonsubmit} type="submit">
+            Create Game
+          </button>
         )}
+        </div>
       </form>
       <br />
     </div>

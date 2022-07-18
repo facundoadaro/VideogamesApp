@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One');
+
+.homebackground {
+  background: url("../../multimedia/homebackground.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+#createlink {
+    padding-right: 3vw;
+}
+
+.firstdivision {
+    display: flex;
+    justify-content:flex-end;
+    flex-direction: row;
+    padding-right: 2.8vw;
+}
+
+#createbutton {
+    height: 40px;
+    width: 150px;
+    font-family: 'Rubik Mono One';
+    color: #ffffff;
+    font-size: 80%;
+    border-radius:30px;
+    background:#ffa515dc;
+    margin-left: 4px;
+}
+#createbutton:hover {
+    color: #ffa515dc;
+    background:#ffffffdd;
+}
+
+#searchinput {
+    border-radius:30px;
+    height: 35px;
+    width: 250px;
+    padding-left: 2vw;
+    padding-right: 5.8vw;
+    font-family: 'Rubik Mono One';
+    color: #ffa515dc;
+}
+
+
+.seconddivision {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    padding-right: 1.5vw;
+    margin: 7vh 1vh 5vh 9vh;
+}
+
+#clearfilterbutton {
+    height: 40px;
+    width: 110px;
+    font-family: 'Rubik Mono One';
+    color: #ffffff;
+    font-size: 80%;
+    border-radius:30px;
+    background:#ffa515dc;
+    margin: 2.3vw 5vw auto auto;
+}
+#clearfilterbutton:hover {
+    color: #ffa515dc;
+    background:#ffffffdd;
+}
+
+.filterordertext {
+    font-family: 'Rubik Mono One';
+    font-size: 85%;
+    color: #ffa515dc;
+}
+
+.rowinputs {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    margin: auto 2vh auto 2vh;
+}
+
+.inputs {
+    border-radius:30px;
+    height: 40px;
+    width: 180px;
+    padding-left: 2vw;
+    font-family: 'Rubik Mono One';
+    color: #ffa515dc;
+    margin: 2vh 2vh auto 2vh;
+}
+
+
+.navpanel {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-right: 2.1vw;
+}
+
+.navpanelbutton {
+    height: 40px;
+    width: 40px;
+    font-family: 'Rubik Mono One';
+    color: #ffffff;
+    font-size: 90%;
+    border-radius:30px;
+    background:#ffa515dc;
+    margin: 3vh 1.3vh 3vh 1.3vh;
+}
+.navpanelbutton:hover {
+    color: #ffa515dc;
+    background:#ffffffdd;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.linkcard {
+  text-decoration: none;
+}
+
+
+.gifloaded {
+  padding-top: 230px;
+  padding-bottom: 265px;
+  padding-right: 80px;
+  height: 150px;
+  width: 150px;
+}

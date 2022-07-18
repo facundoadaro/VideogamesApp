@@ -1,0 +1,160 @@
+.homebackground {
+  background: url("../../multimedia/homebackground.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.errorinputs {
+  font-size: 190%;
+  font-family: "Teko";
+  color: #ff0000a0;
+  margin: 25px 10px 20px 10px;
+  text-transform: uppercase;
+}
+
+
+.nameandurl {
+  border: none;
+  border-radius: 15px;
+  height: 7.5vh;
+  width: 40vw;
+  font-size: 170%;
+  padding-left: 2vw;
+  font-family: "Teko";
+  color: #ffa515dc;
+}
+
+.description {
+  border: none;
+  border-radius: 15px;
+  height: 35vh;
+  width: 38.4vw;
+  font-size: 170%;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 3vh;
+  font-family: "Teko";
+  color: #ffa515dc;
+  text-align: justify;
+}
+
+/* css para el input range */
+
+input[type="range"] {
+  display: flexbox;
+  width: 350px;
+}
+
+input[type="range"],
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  background-color: #ffa515;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #333;
+  border-radius: 50%;
+  margin-top: -14px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background-color: rgb(77, 77, 77);
+  height: 6px;
+  border-radius: 10px;
+}
+
+/* -------------------------------------- */
+
+
+.dateinput {
+  height: 7.5vh;
+  width: 13vw;
+  border: none;
+  border-radius: 10px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  font-family: "Teko";
+  color: #ffa515dc;
+  font-size: 150%;
+}
+
+#dividechecks {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-evenly;
+}
+
+
+.checkcolumns {
+  width: 50vw;  
+  height: 135vh;
+}
+
+.checkcustom {
+width: 1.4vw;
+border: none;
+}
+
+.h5textcheckbox {
+  font-family: "Teko";
+  color: #3c3c3cf1;
+  font-size: 140%;
+  margin: 5px auto 0px 10px;
+}
+
+.rowcheck {
+  display: flex;
+  flex-direction: row;
+  padding-left: 21vw;
+}
+
+.fixedcolumns {
+ margin: auto auto 20vw auto;
+}
+
+.button {
+  height: 40px;
+  width: 130px;
+  font-family: "Rubik Mono One";
+  color: #ffffff;
+  font-size: 130%;
+  border-radius: 30px;
+  background: #ffa515dc;
+  margin-top: .5vh;
+  margin-bottom: 7vh;
+}
+.button:hover {
+  color: #ffa515;
+  background: #ffffffc7;
+}
+
+.buttonsubmit {
+  height: 43px;
+  width: 300px;
+  font-family: "Rubik Mono One";
+  color: #ffffff;
+  font-size: 130%;
+  border-radius: 30px;
+  background: #ffa515dc;
+  margin-top: 5.5vh;
+  margin-bottom: 7vh;
+}
+.buttonsubmit:hover {
+  color: #ffa515;
+  background: #ffffffc7;
+}
+
+.buttonsubmitdisabled {
+  height: 43px;
+  width: 300px;
+  font-family: "Rubik Mono One";
+  color: #ffffff;
+  font-size: 130%;
+  border-radius: 30px;
+  background: #cd1111dc;
+  margin-top: 5.5vh;
+  margin-bottom: 7vh;
+}
